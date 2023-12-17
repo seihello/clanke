@@ -1,6 +1,6 @@
+import { createClient } from "@supabase/supabase-js";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
 
 export const metadata: Metadata = {
   title: "Summations | Explore",
@@ -15,7 +15,7 @@ export default async function ExplorePage() {
   }
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_PROJECT_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   );
 
   const {

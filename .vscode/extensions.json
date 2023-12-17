@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode"
+  ],
+  "editor.formatOnSave": true,
+  "extensions.ignoreRecommendations": false
+}
