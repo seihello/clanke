@@ -20,7 +20,7 @@ const schema = zod
       .string()
       .min(1, { message: "Email is missing" })
       .email({ message: "Email is invalid" }),
-    name: zod.string().min(1, { message: "First name is missing" }),
+    name: zod.string().min(1, { message: "Account name is missing" }),
     password: zod.string().min(1, { message: "Password is missing" }).min(8, {
       message: "Password must be at least 8 characters long",
     }),
@@ -62,14 +62,14 @@ export default function SignUpForm() {
   return (
     <Form {...form}>
       <form
-        className="flex w-full max-w-[32rem] flex-col gap-y-4 items-center"
+        className="flex w-full max-w-[24rem] flex-col gap-y-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
           name="email"
           render={({ field, fieldState }) => (
-            <FormItem className="w-full">
+            <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
@@ -88,7 +88,7 @@ export default function SignUpForm() {
           control={form.control}
           name="name"
           render={({ field, fieldState }) => (
-            <FormItem className="w-full">
+            <FormItem>
               <FormLabel>Account Name</FormLabel>
               <FormControl>
                 <Input
@@ -99,7 +99,7 @@ export default function SignUpForm() {
                   {...field}
                 />
               </FormControl>
-              <FormMessage className="text-xs font-normal" />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -107,7 +107,7 @@ export default function SignUpForm() {
           control={form.control}
           name="password"
           render={({ field, fieldState }) => (
-            <FormItem className="w-full">
+            <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input
@@ -127,7 +127,7 @@ export default function SignUpForm() {
           control={form.control}
           name="confirmPassword"
           render={({ field, fieldState }) => (
-            <FormItem className="w-full">
+            <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <Input
@@ -143,7 +143,7 @@ export default function SignUpForm() {
           )}
         />
 
-        <Button className="w-auto" type="submit" disabled={!form.formState.isValid}>
+        <Button className="mt-4" type="submit" disabled={!form.formState.isValid}>
           Sign Up
         </Button>
       </form>
