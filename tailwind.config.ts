@@ -11,6 +11,12 @@ const config: Config = {
     fontFamily: {
       sans: ["var(--font-sans)", ...fontFamily.sans],
     },
+    extend: {
+      colors: {
+        primary: "#00d394",
+        destructive: "#ff0000"
+      }
+    }
   },
   plugins: [
     require("tailwindcss-animate"),
