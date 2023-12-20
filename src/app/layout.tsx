@@ -16,8 +16,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} `}>
-        <main className="max-w-4xl mx-auto mt-16">{children}</main>
+      <body
+        className={`${inter.className} min-h-screen w-screen pt-16`}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(96,255,208,1) 0%, rgba(0,211,148,1) 100%)",
+        }}
+      >
+        <main className="mx-auto max-w-4xl">{children}</main>
       </body>
     </html>
   );
