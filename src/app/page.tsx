@@ -1,29 +1,21 @@
-import { createClient } from "@supabase/supabase-js";
+import createClient from "@/lib/supabase/server";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Summations | Explore",
+  title: "Clanke | Find your buddy",
 };
 
 export default async function ExplorePage() {
-  if (
-    !process.env.NEXT_PUBLIC_SUPABASE_PROJECT_URL ||
-    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  ) {
-    return;
-  }
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_PROJECT_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  );
+
+  const supabase = createClient();
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    redirect("/auth/signin");
   }
 
   return <div>Home Page</div>;
