@@ -17,13 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} min-h-screen w-screen pt-16`}
+        className={`${inter.className} min-h-screen w-screen`}
         style={{
           background:
             "radial-gradient(circle, rgba(96,255,208,1) 0%, rgba(0,211,148,1) 100%)",
         }}
       >
-        <main className="mx-auto max-w-4xl">{children}</main>
+        <main className="mx-auto max-w-4xl pt-16">{children}</main>
       </body>
     </html>
   );
