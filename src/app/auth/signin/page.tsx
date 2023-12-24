@@ -1,5 +1,5 @@
 import SignInForm from "@/components/auth/sign-in-form";
-import createClient from "@/lib/supabase/server";
+import getCurrentUser from "@/lib/users/get-current-user";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -8,12 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default async function SignInPage() {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  const user = await getCurrentUser();
   if (user) {
     redirect("/");
   }

@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import createClient from "@/lib/supabase/client";
+import signUp from "@/lib/auth/sign-up";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as zod from "zod";
@@ -37,8 +37,6 @@ const schema = zod
   });
 
 export default function SignUpForm() {
-  const supabase = createClient();
-
   const form = useForm<zod.infer<typeof schema>>({
     resolver: zodResolver(schema),
     mode: "all",
@@ -49,13 +47,9 @@ export default function SignUpForm() {
 
   async function onSubmit(values: zod.infer<typeof schema>) {
     try {
-      const { error } = await supabase.auth.signUp({
-        email: values.email,
-        password: values.password,
-      });
-      if (error) throw new Error(error.message);
+      signUp(values.email, values.password);
     } catch (error: any) {
-      console.error(error);
+      console.error("Sign up error: ", error);
     }
   }
 
@@ -143,7 +137,11 @@ export default function SignUpForm() {
           )}
         />
 
-        <Button className="mt-4" type="submit" disabled={!form.formState.isValid}>
+        <Button
+          className="mt-4"
+          type="submit"
+          disabled={!form.formState.isValid}
+        >
           Sign Up
         </Button>
       </form>

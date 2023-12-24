@@ -9,11 +9,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import createClient from "@/lib/supabase/client";
+import signIn from "@/lib/auth/sign-in";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as zod from "zod";
-import { useRouter } from "next/navigation";
 
 const schema = zod.object({
   email: zod
@@ -26,7 +26,6 @@ const schema = zod.object({
 });
 
 export default function SignInForm() {
-  const supabase = createClient();
   const router = useRouter();
 
   const form = useForm<zod.infer<typeof schema>>({
@@ -40,14 +39,10 @@ export default function SignInForm() {
 
   async function onSubmit(values: zod.infer<typeof schema>) {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: values.email,
-        password: values.password,
-      });
-      if (error) throw new Error(error.message);
+      await signIn(values.email, values.password);
       router.replace("/");
     } catch (error: any) {
-      console.error(error);
+      console.error("Sign in error: ", error);
     }
   }
 

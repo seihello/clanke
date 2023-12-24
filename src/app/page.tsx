@@ -1,22 +1,18 @@
-import createClient from "@/lib/supabase/server";
+import ThreadsView from "@/components/threads/threads-view";
+import getCurrentUser from "@/lib/users/get-current-user";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Clanke | Find your buddy",
 };
 
-export default async function ExplorePage() {
-
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/auth/signin");
+export default async function ThreadsPage() {
+  try {
+    const user = await getCurrentUser();
+    console.log("user", user);
+    return <ThreadsView user={user} />;
+  } catch (error: any) {
+    console.error(error);
+    return <>Error!</>;
   }
-
-  return <div>Home Page</div>;
 }
