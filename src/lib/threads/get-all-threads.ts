@@ -11,5 +11,12 @@ export default async function getAllThreads(): Promise<Thread[]> {
     throw new Error(error.message);
   }
 
-  return data;
+  const threads = data?.map((thread) => {
+    return {
+      ...thread,
+      created_at: new Date(thread.created_at)
+    }
+  }) 
+
+  return threads;
 }
