@@ -18,8 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import postNewThread from "@/lib/threads/post-new-thread";
+import { UserInfo } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as zod from "zod";
@@ -29,12 +30,16 @@ const schema = zod.object({
     .string()
     .min(1, { message: "Title is missing" })
     .max(128, { message: "Title is too long" }),
-  body: zod.string().min(1, { message: "Text is missing" }).min(2000, {
+  body: zod.string().min(1, { message: "Text is missing" }).max(2000, {
     message: "Text is too long",
   }),
 });
 
-export default function NewThreadDialog() {
+type Props = {
+  user: UserInfo | null;
+};
+
+export default function NewThreadDialog({ user }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<zod.infer<typeof schema>>({
@@ -48,10 +53,7 @@ export default function NewThreadDialog() {
 
   async function onSubmit(values: zod.infer<typeof schema>) {
     try {
-      const res = await axios.post("/api/threads/new", {
-        title: values.title,
-        body: values.body,
-      });
+      await postNewThread(values.title, values.body, user?.id);
       setIsOpen(false);
     } catch (error: any) {
       console.error(error);
@@ -84,7 +86,7 @@ export default function NewThreadDialog() {
                   <FormControl>
                     <Input
                       autoComplete="off"
-                      type="email"
+                      type="text"
                       placeholder="Type title"
                       className={fieldState.invalid ? "border-destructive" : ""}
                       {...field}

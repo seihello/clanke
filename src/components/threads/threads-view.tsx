@@ -7,7 +7,7 @@ type Props = {
 export default function ThreadsView({ user }: Props) {
   return (
     <div>
-      <NewThreadDialog />
+      <NewThreadDialog user={user} />
     </div>
   );
 }
