@@ -1,35 +1,17 @@
 "use client";
 import NewThreadDialog from "@/components/threads/new-thread-dialog";
-import ThreadCard from "@/components/threads/thread-card";
-import getAllThreads from "@/lib/threads/get-all-threads";
-import { Thread } from "@/types/thread";
+import ThreadList from "@/components/threads/thread-list";
 import { UserInfo } from "@/types/user";
-import { useEffect, useState } from "react";
 
 type Props = {
   user: UserInfo | null;
 };
+
 export default function ThreadsView({ user }: Props) {
-  const [threads, setThreads] = useState<Thread[]>([]);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await getAllThreads();
-        setThreads(data);
-      } catch (error: any) {
-        console.error(error);
-      }
-    };
-
-    getData();
-  }, []);
-
   return (
-    <div>
+    <div className="rounded-md bg-white p-4 flex flex-col gap-y-4">
       <NewThreadDialog user={user} />
-      {threads.map((thread: Thread, index: number) => (
-        <ThreadCard key={index} thread={thread} user={user} />
-      ))}
+      <ThreadList user={user} />
     </div>
   );
 }

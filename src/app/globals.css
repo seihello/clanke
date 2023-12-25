@@ -15,8 +15,12 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-@layer components {
+@layer base {
+  body {
+    @apply text-gray-800;
+  }
   h1 {
     @apply text-4xl text-center;
   }
+
 }

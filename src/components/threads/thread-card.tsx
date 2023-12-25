@@ -8,10 +8,8 @@ type Props = {
 
 export default function ThreadCard({ thread, user }: Props) {
   return (
-    <div className="w-full rounded-md bg-white">
+    <div className="w-full rounded-md py-4">
       <h2>{thread.title}</h2>
-      <p>{thread.body}</p>
-      <p>{thread.created_at.toLocaleString()}</p>
     </div>
   );
 }
