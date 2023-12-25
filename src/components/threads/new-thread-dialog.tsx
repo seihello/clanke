@@ -14,7 +14,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,13 +25,8 @@ import { useForm } from "react-hook-form";
 import * as zod from "zod";
 
 const schema = zod.object({
-  title: zod
-    .string()
-    .min(1, { message: "Title is missing" })
-    .max(128, { message: "Title is too long" }),
-  body: zod.string().min(1, { message: "Text is missing" }).max(2000, {
-    message: "Text is too long",
-  }),
+  title: zod.string().min(1).max(128),
+  body: zod.string().min(1).max(2000),
 });
 
 type Props = {
@@ -63,7 +57,7 @@ export default function NewThreadDialog({ user }: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">New thread</Button>
+        <Button>New thread</Button>
       </DialogTrigger>
       <DialogContent className="max-w-[48rem]">
         <DialogHeader>
@@ -88,11 +82,9 @@ export default function NewThreadDialog({ user }: Props) {
                       autoComplete="off"
                       type="text"
                       placeholder="Type title"
-                      className={fieldState.invalid ? "border-destructive" : ""}
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -105,11 +97,10 @@ export default function NewThreadDialog({ user }: Props) {
                   <FormControl>
                     <Textarea
                       placeholder="Ask for advice"
-                      className={fieldState.invalid ? "border-destructive" : ""}
+                      className="h-64"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
