@@ -49,6 +49,7 @@ export default function NewThreadDialog({ user }: Props) {
     try {
       await postNewThread(values.title, values.body, user?.id);
       setIsOpen(false);
+      form.reset();
     } catch (error: any) {
       console.error(error);
     }
